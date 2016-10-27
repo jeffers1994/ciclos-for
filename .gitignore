@@ -1,0 +1,77 @@
+/*   UNIVERSIDAD TECNICA DEL NORTE
+              FICA-CIERCOM
+        SISTEMAS MICROPROCESADOS
+Nombre: Jefferson Flores 
+Fecha: 27-10-2016
+
+Deber #2          JUEGOS DE LUCES CON CICLOS FOR 
+
+  El presente codigo tiene 2 juegos de 6 leds por cada juego
+  Los leds estan ubicados verticalmente en una barra de leds de color verde
+  Para los juegos se utilizaran ciclos for
+  
+  1.- Este juego se inicia con el switch_1= 1 y el switvh_2= 0 empieza prendiendo desde el pin 13 hasta el pin 8 es decir de arriba hacia abajo uno a uno y luego viceversa el numero de veces esta
+  dado por ramdon puede ser maximo 10 veces
+  2.- El segundo juego se activa con el switch_1 = 0 y el switch_2 = 1 y comienza en el pin 8 y el pin 13, es decir en los extremos enciende y avanza hasta el centro 
+  este juego se encendera las veces que el ramdon indique puede ser hasta un limite de  10  veces
+*/
+//Inicializar variables
+int sw_1=7;            //switch 1
+int sw_2=6;            //switch 2
+int rept=0;
+int vector_leds [6]={8,9,10,11,12,13};
+//Variables de contadores
+int i;
+int j;
+int cont_1;
+int cont_2;
+
+void setup() {
+  pinMode(8,OUTPUT);      //pin 8 como salida
+  pinMode(9,OUTPUT);      //pin 9 como salida
+  pinMode(10,OUTPUT);     //pin 10 como salida
+  pinMode(11,OUTPUT);     //pin 11 como salida
+  pinMode(12,OUTPUT);     //pin 12 como salida
+  pinMode(13,OUTPUT);     //pin 13 como salida
+  pinMode(sw_1,INPUT);    //pin 7 como entrada
+  pinMode(sw_2,INPUT);    //pin 6 como entrada
+}
+
+void loop() {
+//Primer Juego de luces
+    if(digitalRead(sw_1)==LOW&&digitalRead(sw_2)==HIGH){
+           delay(150);
+           rept=random(10);
+           for(j=0;j<rept;j++){                   //inicio for 1
+              for(i=8;i<14;i++){                  //inicio for 2
+                       digitalWrite(i,LOW);
+                       delay(150);
+               }                                  //fin For 2
+               for(i=13;i>7;i--){                 //inicio for 3
+                      digitalWrite(i,HIGH);
+                      delay(150);
+                 }                                 //fin for 3
+               i=8;
+              }                                    //fin for 1    
+              delay(5000);                         //Tiempo de espera antes de empezar la siguiente secuencia   
+            }
+      else{                                        //Segundo Juego de luces
+         if(digitalRead(sw_1)==HIGH&&digitalRead(sw_2)==LOW){
+              delay(150);
+              rept=random(10);
+              for(j=0;j<rept;j++){                  //inicio For 1
+                 for (cont_1 = 8,cont_2 = 13; cont_1 < 11; cont_1++,cont_2--) { //inicio For 2
+                    digitalWrite(cont_1, HIGH);
+                    digitalWrite(cont_2, HIGH);
+                    delay(150);
+                   }                               //fin For 2
+                 for (cont_1 = 10, cont_2 = 11; cont_2 < 14; cont_1--,cont_2++) {//inicio For 3
+                     digitalWrite(cont_1, LOW);
+                     digitalWrite(cont_2, LOW);
+                     delay(150);
+                    }                              //fin For 3
+                 }                                 //fin For 1
+       }
+        delay(5000);                               //Tiempo de espera antes de empezar la siguiente secuencia
+      }
+}
